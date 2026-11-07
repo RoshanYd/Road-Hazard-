@@ -12,7 +12,14 @@
     "start:admin": "npm --prefix frontend-admin start",
     "build:user": "npm --prefix frontend-user run build",
     "build:admin": "npm --prefix frontend-admin run build",
-    "install:all": "npm install --prefix backend && npm install --prefix frontend-user && npm install --prefix frontend-admin"
+    "install:all": "npm install --prefix backend && npm install --prefix frontend-user && npm install --prefix frontend-admin",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d --build",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "k8s:dry-run": "kubectl kustomize k8s/",
+    "k8s:apply": "kubectl apply -k k8s/",
+    "k8s:delete": "kubectl delete -k k8s/"
   },
   "keywords": [
     "road-hazard",

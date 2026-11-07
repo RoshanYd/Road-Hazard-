@@ -49,6 +49,8 @@ uploads/
 id_rsa
 id_ecdsa
 id_ed25519
+k8s/secret.yaml
+!k8s/secret.yaml.example
 
 # Logs
 logs/

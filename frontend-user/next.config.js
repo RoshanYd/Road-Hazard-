@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    ...(process.env.STANDALONE === 'true' ? { output: 'standalone' } : {}),
     reactStrictMode: true,
     images: {
         domains: ['localhost'],

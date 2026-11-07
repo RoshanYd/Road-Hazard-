@@ -4,6 +4,8 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14-black.svg)](https://nextjs.org/)
 [![Express.js](https://img.shields.io/badge/Express-4.18-lightgrey.svg)](https://expressjs.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Supabase-blue.svg)](https://supabase.com/)
+[![Docker](https://img.shields.io/badge/Docker-20%2B-blue.svg)](https://www.docker.com/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-1.28%2B-326CE5.svg)](https://kubernetes.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **MargRakshak** (मार्ग रक्षक) is a modern, full-stack civic technology platform empowering citizens to report road hazards (potholes, damaged streetlights, road cracks, open manholes) in real-time and allowing civic authorities to triage, manage, assign, and resolve them efficiently.
@@ -41,9 +43,23 @@ proj/
 │   │   └── store/            # Admin Zustand store
 │   └── tailwind.config.js    # Admin dashboard styling
 │
-└── database/                 # Database schema and migration scripts
-    ├── schema.sql            # PostgreSQL schema with UUIDs, Enums, Views, and Indexes
-    └── README.md             # Database architecture and setup guide
+├── database/                 # Database schema and migration scripts
+│   ├── schema.sql            # PostgreSQL schema with UUIDs, Enums, Views, and Indexes
+│   └── README.md             # Database architecture and setup guide
+│
+├── k8s/                      # Kubernetes Orchestration Manifests (Production)
+│   ├── namespace.yaml        # Dedicated 'margrakshak' namespace
+│   ├── configmap.yaml        # Shared environment configuration
+│   ├── secret.yaml.example   # Secret template (Database URL, JWT keys, AI tokens)
+│   ├── pvc.yaml              # Persistent volume claim for uploaded road hazard photos
+│   ├── backend-deployment.yaml & backend-service.yaml
+│   ├── frontend-user-deployment.yaml & frontend-user-service.yaml
+│   ├── frontend-admin-deployment.yaml & frontend-admin-service.yaml
+│   ├── ingress.yaml          # NGINX Ingress rules for domains and path prefixes
+│   ├── hpa.yaml              # Horizontal Pod Autoscaling (traffic & disaster surges)
+│   └── kustomization.yaml    # One-command declarative deployment
+│
+└── docker-compose.yml        # Full-stack multi-container Docker compose orchestrator
 ```
 
 ---
@@ -58,6 +74,9 @@ proj/
 | **Database** | PostgreSQL (Supabase cloud database with SSL pooling) |
 | **Authentication** | JWT (Dual user/admin secret isolation, HTTP Bearer tokens, Bcrypt salt rounds) |
 | **AI Capabilities** | Google Gemini Vision API (Automatic hazard classification), Groq Llama (Saarthi Chatbot) |
+| **Containerization** | Docker, Multi-stage builds, Alpine/Slim runtimes, Non-root security |
+| **Orchestration** | Kubernetes (Deployments, Services, NGINX Ingress, HPA, PVC, Kustomize) |
+| **Local Full-Stack** | Docker Compose (One-command orchestration with local PostgreSQL) |
 
 ---
 
@@ -178,6 +197,100 @@ npm run dev:user
 npm run dev:admin
 # Or: cd frontend-admin && npm run dev
 # Running on http://localhost:3001
+```
+
+---
+
+## 🐳 Running with Docker & Docker Compose
+
+For a zero-dependency, containerized setup that runs the entire platform identically across Windows, macOS, and Linux:
+
+### 1. Start the Full Stack (One Command)
+```bash
+# Starts Local PostgreSQL, Express Backend, Citizen Portal, and Admin Portal
+npm run docker:up
+
+# Or using docker-compose directly:
+docker-compose up -d --build
+```
+
+### 2. Verify Running Containers
+```bash
+docker ps
+```
+You will see 4 isolated containers running:
+- `margrakshak-postgres` (Port `5432` with auto-loaded schema)
+- `margrakshak-backend` (Port `5000` with container health checks)
+- `margrakshak-citizen-portal` (Port `3000` running optimized Next.js standalone)
+- `margrakshak-admin-portal` (Port `3001` running optimized Next.js standalone)
+
+### 3. View Real-time Logs
+```bash
+npm run docker:logs
+# Or: docker-compose logs -f
+```
+
+### 4. Stop Containers
+```bash
+npm run docker:down
+# Or: docker-compose down
+```
+
+---
+
+## ☸️ Production Deployment with Kubernetes (k8s)
+
+MargRakshak includes production-ready Kubernetes manifests configured with resource limits, self-healing health probes, persistent storage, NGINX Ingress rules, and Horizontal Pod Autoscaling (HPA) to withstand road emergency traffic spikes.
+
+### 1. Prerequisites
+- Running Kubernetes cluster (`minikube`, `kind`, `k3s`, `GKE`, `EKS`, or `AKS`)
+- `kubectl` v1.28+ with Kustomize support
+- NGINX Ingress Controller installed on the cluster
+
+### 2. Configure Production Secrets
+Create your secret file from the secure template:
+```bash
+cp k8s/secret.yaml.example k8s/secret.yaml
+```
+Edit `k8s/secret.yaml` with your production `DATABASE_URL`, `JWT_SECRET_USER`, `JWT_SECRET_ADMIN`, `GEMINI_API_KEY`, and `GROQ_API_KEY`.
+*(Note: `k8s/secret.yaml` is pre-configured in `.gitignore` and is never committed to source control).*
+
+Apply secrets:
+```bash
+kubectl apply -f k8s/secret.yaml
+```
+
+### 3. Deploy All Resources with Kustomize
+Deploy the entire namespace, deployments, services, PVC, ingress, and autoscalers in one command:
+```bash
+# Dry run / preview the generated manifests:
+npm run k8s:dry-run
+
+# Deploy to cluster:
+npm run k8s:apply
+# Or: kubectl apply -k k8s/
+```
+
+### 4. Inspect Cluster Health
+```bash
+kubectl get all,pvc,ingress,hpa -n margrakshak
+```
+
+### 5. Ingress Traffic Routing
+The Ingress controller routes traffic according to host headers:
+- `https://margrakshak.gov.in` $\rightarrow$ Citizen Portal (`frontend-user-service:3000`)
+- `https://admin.margrakshak.gov.in` $\rightarrow$ Operations Command (`frontend-admin-service:3001`)
+- `https://api.margrakshak.gov.in` $\rightarrow$ REST & WebSocket API (`backend-service:5000`)
+
+### 6. Auto-Scaling (HPA)
+The backend and citizen portal automatically scale replicas horizontally:
+- **Backend HPA:** 2 to 10 replicas when CPU exceeds 70% or memory exceeds 80%.
+- **Citizen Portal HPA:** 2 to 8 replicas when CPU exceeds 75%.
+
+### 7. Teardown / Cleanup
+```bash
+npm run k8s:delete
+# Or: kubectl delete -k k8s/
 ```
 
 ---

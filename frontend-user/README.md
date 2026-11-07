@@ -80,3 +80,16 @@ npm install
 npm run dev
 ```
 The citizen portal will open at `http://localhost:3000`.
+
+---
+
+## 🐳 Docker Deployment
+
+Build and run optimized standalone container:
+```bash
+# Build standalone Next.js image
+docker build --build-arg NEXT_PUBLIC_API_URL=http://localhost:5000/api -t margrakshak-citizen-portal .
+
+# Run container
+docker run -d -p 3000:3000 --name margrakshak-citizen-portal margrakshak-citizen-portal
+```

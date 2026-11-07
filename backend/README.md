@@ -102,10 +102,23 @@ cp .env.example .env
 ```bash
 node create_admin.js
 ```
-*Creates initial administrator `admin@gov.in` with password `Admin@123`.*
+*Creates initial administrator `admin.gov.in` (and `admin@gov.in`) with password `admin123`.*
 
 ### 4. Start Development Server
 ```bash
 npm run dev
 ```
 Server will start on `http://localhost:5000` with hot-reloading via nodemon.
+
+---
+
+## 🐳 Docker Deployment
+
+Build and run standalone backend container:
+```bash
+# Build Docker image
+docker build -t margrakshak-backend .
+
+# Run container
+docker run -d -p 5000:5000 --env-file .env --name margrakshak-backend margrakshak-backend
+```

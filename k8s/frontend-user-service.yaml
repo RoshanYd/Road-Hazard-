@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-user-service
+  namespace: margrakshak
+  labels:
+    app: margrakshak-user-portal
+    app.kubernetes.io/part-of: road-hazard-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: margrakshak-user-portal
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
+

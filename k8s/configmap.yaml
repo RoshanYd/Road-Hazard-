@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: margrakshak-config
+  namespace: margrakshak
+  labels:
+    app.kubernetes.io/part-of: road-hazard-platform
+data:
+  NODE_ENV: "production"
+  PORT: "5000"
+  USER_PORT: "3000"
+  ADMIN_PORT: "3001"
+  USER_FRONTEND_URL: "https://margrakshak.gov.in"
+  ADMIN_FRONTEND_URL: "https://admin.margrakshak.gov.in"
+  NEXT_PUBLIC_API_URL: "https://api.margrakshak.gov.in/api"
+  UPLOAD_DIR: "/app/uploads"
+  MAX_FILE_SIZE: "5242880"
+  ALLOWED_FILE_TYPES: "image/jpeg,image/png,image/jpg"
+  JWT_ACCESS_EXPIRY: "15m"
+  JWT_REFRESH_EXPIRY: "7d"
+

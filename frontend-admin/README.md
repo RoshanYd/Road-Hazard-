@@ -83,3 +83,16 @@ npm install
 npm run dev
 ```
 The admin dashboard runs by default on `http://localhost:3001`.
+
+---
+
+## 🐳 Docker Deployment
+
+Build and run standalone container:
+```bash
+# Build standalone Next.js image
+docker build --build-arg NEXT_PUBLIC_API_URL=http://localhost:5000/api -t margrakshak-admin-portal .
+
+# Run container
+docker run -d -p 3001:3001 --name margrakshak-admin-portal margrakshak-admin-portal
+```
