@@ -1,0 +1,41 @@
+{
+    "name": "RoadSafe - Road Hazard Reporter",
+    "short_name": "RoadSafe",
+    "description": "Report road hazards like potholes, broken street lights, and damaged roads to help improve road safety.",
+    "start_url": "/dashboard",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#2563eb",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["government", "utilities", "navigation"],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Report Hazard",
+            "short_name": "Report",
+            "url": "/dashboard/submit-report",
+            "icons": [{ "src": "/logo.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Hazard Map",
+            "short_name": "Map",
+            "url": "/heatmap",
+            "icons": [{ "src": "/logo.png", "sizes": "192x192" }]
+        }
+    ]
+}

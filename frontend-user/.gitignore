@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.next/
+out/
+build/
+package-lock.json
+
+# Environment
+.env
+.env.*
+.env.local
+.env.*.local
+*.env
+!**/.env.example
+
+# Testing
+coverage/
+.nyc_output/
+
+# Secrets & Keys
+*.pem
+*.key
+*.cert
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# TypeScript & build
+*.tsbuildinfo
+next-env.d.ts

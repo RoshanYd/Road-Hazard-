@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.*.local
+*.env
+!**/.env.example
+
+# Uploads & Media
+uploads/
+uploads/*
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+
+# Keys & Secrets
+*.pem
+*.key
+*.crt
+*.cert
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

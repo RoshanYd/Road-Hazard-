@@ -1,0 +1,28 @@
+{
+  "name": "margrakshak-road-hazard-platform",
+  "version": "1.0.0",
+  "description": "MargRakshak - Road Hazard Reporting & Management Platform (Full-Stack Monorepo)",
+  "private": true,
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:user": "npm --prefix frontend-user run dev",
+    "dev:admin": "npm --prefix frontend-admin run dev",
+    "start:backend": "npm --prefix backend start",
+    "start:user": "npm --prefix frontend-user start",
+    "start:admin": "npm --prefix frontend-admin start",
+    "build:user": "npm --prefix frontend-user run build",
+    "build:admin": "npm --prefix frontend-admin run build",
+    "install:all": "npm install --prefix backend && npm install --prefix frontend-user && npm install --prefix frontend-admin"
+  },
+  "keywords": [
+    "road-hazard",
+    "civic-tech",
+    "government",
+    "nextjs",
+    "express",
+    "supabase",
+    "margrakshak"
+  ],
+  "author": "MargRakshak Team",
+  "license": "MIT"
+}
