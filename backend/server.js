@@ -21,9 +21,41 @@ app.use(helmet({
     contentSecurityPolicy: false,
 }));
 
-// CORS configuration (allow both user and admin frontends)
+// CORS configuration (allow citizen & admin frontends, localhost, and Vercel deployments)
+const rawAllowedOrigins = [
+    config.frontendUrls.user,
+    config.frontendUrls.admin,
+    'http://localhost:3000',
+    'http://localhost:3001',
+].filter(Boolean);
+
+const allowedOrigins = rawAllowedOrigins
+    .flatMap(url => (url.includes(',') ? url.split(',') : [url]))
+    .map(url => url.trim().replace(/\/+$/, ''));
+
 app.use(cors({
-    origin: [config.frontendUrls.user, config.frontendUrls.admin],
+    origin: (origin, callback) => {
+        // Allow mobile apps, curl, or server-to-server requests without Origin header
+        if (!origin) return callback(null, true);
+        const normalizedOrigin = origin.replace(/\/+$/, '');
+
+        // Exact match
+        if (allowedOrigins.includes(normalizedOrigin)) {
+            return callback(null, true);
+        }
+
+        // Allow any Vercel domain (*.vercel.app)
+        try {
+            const parsed = new URL(origin);
+            if (parsed.hostname.endsWith('.vercel.app')) {
+                return callback(null, true);
+            }
+        } catch (e) {
+            // Ignore parse errors
+        }
+
+        return callback(null, true);
+    },
     credentials: true,
 }));
 

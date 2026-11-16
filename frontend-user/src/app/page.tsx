@@ -361,7 +361,14 @@ export default function HomePage() {
                         <div>
                             <h4 className="font-bold mb-4 text-gov-300 uppercase tracking-widest text-xs">Quick Links</h4>
                             <ul className="space-y-2 text-gov-400 text-sm">
-                                {[['#features','Features'], ['#how-it-works','How It Works'], ['/login','Sign In'], ['/register','Register'], ['/heatmap','Hazard Map'], ['http://localhost:3001/login','Admin Portal ↗']].map(([href, label]) => (
+                                {[
+                                    ['#features', 'Features'],
+                                    ['#how-it-works', 'How It Works'],
+                                    ['/login', 'Sign In'],
+                                    ['/register', 'Register'],
+                                    ['/heatmap', 'Hazard Map'],
+                                    [`${process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || 'http://localhost:3001'}/login`, 'Admin Portal ↗']
+                                ].map(([href, label]) => (
                                     <li key={href}><a href={href} className="hover:text-white transition-colors">{label}</a></li>
                                 ))}
                             </ul>

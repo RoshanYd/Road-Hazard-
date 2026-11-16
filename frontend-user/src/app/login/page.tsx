@@ -163,7 +163,10 @@ export default function LoginPage() {
                             </p>
                             <p className="text-xs text-gov-500 dark:text-gov-400 pt-2 border-t border-gov-100 dark:border-gov-800">
                                 Civic Authority or Department Official?{' '}
-                                <a href="http://localhost:3001/login" className="font-semibold text-accent-600 dark:text-accent-400 hover:underline">
+                                <a
+                                    href={`${process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || 'http://localhost:3001'}/login`}
+                                    className="font-semibold text-accent-600 dark:text-accent-400 hover:underline"
+                                >
                                     Sign In to Admin Portal →
                                 </a>
                             </p>

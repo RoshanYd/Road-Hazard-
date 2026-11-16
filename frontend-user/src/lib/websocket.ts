@@ -22,9 +22,23 @@ interface UseWebSocketReturn {
     connectionState: 'connecting' | 'connected' | 'disconnected' | 'reconnecting';
 }
 
-const WS_URL = (typeof window !== 'undefined')
-    ? `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.hostname}:5000/ws`
-    : '';
+function getWebSocketUrl(): string {
+    if (typeof window === 'undefined') return '';
+    if (process.env.NEXT_PUBLIC_WS_URL) return process.env.NEXT_PUBLIC_WS_URL;
+    if (process.env.NEXT_PUBLIC_API_URL) {
+        try {
+            const url = new URL(process.env.NEXT_PUBLIC_API_URL);
+            const wsProtocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+            return `${wsProtocol}//${url.host}/ws`;
+        } catch {
+            // fallback below
+        }
+    }
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    return `${protocol}//${window.location.hostname}:5000/ws`;
+}
+
+const WS_URL = getWebSocketUrl();
 
 export function useWebSocket(): UseWebSocketReturn {
     const { user } = useAuthStore();
