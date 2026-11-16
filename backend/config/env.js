@@ -27,8 +27,8 @@ module.exports = {
 
   // JWT Configuration
   jwt: {
-    userSecret: process.env.JWT_SECRET_USER,
-    adminSecret: process.env.JWT_SECRET_ADMIN,
+    userSecret: process.env.JWT_SECRET_USER || 'margrakshak_default_user_secret_key_2026',
+    adminSecret: process.env.JWT_SECRET_ADMIN || 'margrakshak_default_admin_secret_key_2026',
     accessExpiry: process.env.JWT_ACCESS_EXPIRY || '15m',
     refreshExpiry: process.env.JWT_REFRESH_EXPIRY || '7d',
   },
