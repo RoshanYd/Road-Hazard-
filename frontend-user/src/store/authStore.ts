@@ -18,6 +18,7 @@ interface AuthState {
 
     // Actions
     login: (email: string, password: string) => Promise<void>;
+    loginWithGoogle: (credential: string) => Promise<void>;
     register: (name: string, email: string, password: string, phone: string) => Promise<void>;
     logout: () => Promise<void>;
     loadUser: () => void;
@@ -70,6 +71,34 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         } catch (error: any) {
             set({ isLoading: false });
             const message = error.response?.data?.message || 'Login failed';
+            toast.error(message);
+            throw error;
+        }
+    },
+
+    loginWithGoogle: async (credential: string) => {
+        set({ isLoading: true });
+        try {
+            const response = await authAPI.googleLogin(credential);
+            const { user, accessToken, refreshToken } = response.data;
+
+            // Store in localStorage
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+
+            set({
+                user,
+                accessToken,
+                refreshToken,
+                isAuthenticated: true,
+                isLoading: false,
+            });
+
+            toast.success(`Welcome, ${user.name}!`);
+        } catch (error: any) {
+            set({ isLoading: false });
+            const message = error.response?.data?.message || 'Google login failed';
             toast.error(message);
             throw error;
         }

@@ -149,6 +149,127 @@ router.post('/login', validate(loginSchema), async (req, res) => {
 });
 
 /**
+ * @route   POST /api/auth/google
+ * @desc    Authenticate or register citizen via Google ID token
+ * @access  Public
+ */
+router.post('/google', async (req, res) => {
+    try {
+        const { credential } = req.body;
+
+        if (!credential) {
+            return res.status(400).json({
+                success: false,
+                message: 'Google credential token is required',
+            });
+        }
+
+        // Verify ID token with Google tokeninfo API
+        const googleRes = await fetch(
+            `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`
+        );
+
+        if (!googleRes.ok) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid or expired Google authentication token',
+            });
+        }
+
+        const payload = await googleRes.json();
+
+        // Ensure email exists and is verified by Google
+        if (!payload.email || (payload.email_verified !== 'true' && payload.email_verified !== true)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Google account email is not verified',
+            });
+        }
+
+        // Validate audience if GOOGLE_CLIENT_ID is configured
+        if (process.env.GOOGLE_CLIENT_ID && payload.aud !== process.env.GOOGLE_CLIENT_ID) {
+            return res.status(401).json({
+                success: false,
+                message: 'Google token audience mismatch',
+            });
+        }
+
+        const email = payload.email.trim().toLowerCase();
+        const name = payload.name || payload.email.split('@')[0];
+
+        // Check if user already exists
+        const existingUser = await db.query(
+            'SELECT id, name, email, phone, status FROM users WHERE LOWER(email) = $1',
+            [email]
+        );
+
+        let user;
+
+        if (existingUser.rows.length > 0) {
+            user = existingUser.rows[0];
+
+            if (user.status !== 'active') {
+                return res.status(403).json({
+                    success: false,
+                    message: 'Account is suspended or deactivated',
+                });
+            }
+
+            // Ensure email_verified is true
+            await db.query(
+                'UPDATE users SET email_verified = true, updated_at = CURRENT_TIMESTAMP WHERE id = $1',
+                [user.id]
+            );
+        } else {
+            // Create new citizen user
+            const randomPassword = uuidv4() + Date.now();
+            const passwordHash = await hashPassword(randomPassword);
+
+            const newUserResult = await db.query(
+                `INSERT INTO users (name, email, password_hash, email_verified, status)
+                 VALUES ($1, $2, $3, true, 'active')
+                 RETURNING id, name, email, phone, status`,
+                [name, email, passwordHash]
+            );
+
+            user = newUserResult.rows[0];
+        }
+
+        // Generate tokens
+        const { accessToken, refreshToken } = generateUserTokens(user.id);
+
+        // Store refresh token
+        const expiresAt = new Date();
+        expiresAt.setDate(expiresAt.getDate() + 7);
+
+        await db.query(
+            `INSERT INTO refresh_tokens (user_id, token, expires_at)
+             VALUES ($1, $2, $3)`,
+            [user.id, refreshToken, expiresAt]
+        );
+
+        res.json({
+            success: true,
+            message: 'Google authentication successful',
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+            },
+            accessToken,
+            refreshToken,
+        });
+    } catch (error) {
+        console.error('Google auth error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Google login failed: ' + (error.message || 'Server error'),
+        });
+    }
+});
+
+/**
  * @route   POST /api/auth/refresh
  * @desc    Refresh access token
  * @access  Public

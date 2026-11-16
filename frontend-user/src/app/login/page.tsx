@@ -6,10 +6,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
 import ThemeToggle from '../../components/ThemeToggle';
+import GoogleSignInButton from '../../components/GoogleSignInButton';
 
 export default function LoginPage() {
     const router = useRouter();
-    const { login, isLoading } = useAuthStore();
+    const { login, loginWithGoogle, isLoading } = useAuthStore();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -48,6 +49,16 @@ export default function LoginPage() {
         } catch (error) {
             setIsNavigating(false);
             // Error is handled by store
+        }
+    };
+
+    const handleGoogleSuccess = async (credential: string) => {
+        try {
+            await loginWithGoogle(credential);
+            setIsNavigating(true);
+            router.push('/dashboard');
+        } catch (error) {
+            setIsNavigating(false);
         }
     };
 
@@ -153,6 +164,24 @@ export default function LoginPage() {
                                 'Sign In to Portal'
                             )}
                         </button>
+
+                        {/* Divider */}
+                        <div className="relative my-4">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-gov-200 dark:border-gov-800" />
+                            </div>
+                            <div className="relative flex justify-center text-xs uppercase">
+                                <span className="bg-white dark:bg-gov-900 px-3 text-gov-400 dark:text-gov-500 font-medium tracking-wider">
+                                    Or
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Google Sign-In for Citizens */}
+                        <GoogleSignInButton
+                            onSuccess={handleGoogleSuccess}
+                            disabled={isLoading || isNavigating}
+                        />
 
                         <div className="text-center space-y-2">
                             <p className="text-sm text-gov-600 dark:text-gov-400">
