@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "MargRakshak - Road Hazard Reporting & Management Platform (Full-Stack Monorepo)",
   "private": true,
+  "main": "server.js",
   "scripts": {
+    "build": "npm --prefix backend install",
+    "start": "node server.js",
     "dev:backend": "npm --prefix backend run dev",
     "dev:user": "npm --prefix frontend-user run dev",
     "dev:admin": "npm --prefix frontend-admin run dev",
