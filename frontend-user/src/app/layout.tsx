@@ -5,6 +5,7 @@ import '../styles/globals.css';
 
 export const metadata: Metadata = {
     title: 'MargRakshak - Citizen Road Hazard Reporting Portal',
+    applicationName: 'MargRakshak',
     description: 'Empowering citizens to report road hazards (potholes, street lights, broken roads) and track resolution in real-time across India.',
     keywords: 'road safety, pothole reporting, street light, road hazard, civic engagement, MargRakshak',
     manifest: '/manifest.json',

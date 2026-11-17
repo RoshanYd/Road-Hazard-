@@ -1,0 +1,25 @@
+{
+    "name": "MargRakshak Admin",
+    "short_name": "MargRakshak Admin",
+    "description": "MargRakshak Admin Command - Civic Authority & Department Road Hazard Management",
+    "start_url": "/dashboard",
+    "display": "standalone",
+    "background_color": "#0e2450",
+    "theme_color": "#0e2450",
+    "orientation": "any",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "/margrakshak-logo.webp",
+            "sizes": "192x192",
+            "type": "image/webp",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/margrakshak-logo.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any maskable"
+        }
+    ]
+}

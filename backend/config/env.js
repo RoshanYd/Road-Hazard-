@@ -66,7 +66,7 @@ module.exports = {
     service: process.env.EMAIL_SERVICE || 'gmail',
     user: process.env.EMAIL_USER,
     password: process.env.EMAIL_PASSWORD,
-    from: process.env.EMAIL_FROM || 'Road Hazard Platform <noreply@roadsafety.gov.in>',
+    from: process.env.EMAIL_FROM || 'MargRakshak Platform <noreply@margrakshak.gov.in>',
   },
 
   // SMS Configuration (Twilio)

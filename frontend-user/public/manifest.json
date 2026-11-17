@@ -1,14 +1,26 @@
 {
-    "name": "RoadSafe - Road Hazard Reporter",
-    "short_name": "RoadSafe",
-    "description": "Report road hazards like potholes, broken street lights, and damaged roads to help improve road safety.",
+    "name": "MargRakshak",
+    "short_name": "MargRakshak",
+    "description": "MargRakshak - Official Road Hazard Reporting Platform. Report potholes, damaged roads, and hazards to improve road safety across India.",
     "start_url": "/dashboard",
     "display": "standalone",
-    "background_color": "#0f172a",
-    "theme_color": "#2563eb",
+    "background_color": "#0e2450",
+    "theme_color": "#0e2450",
     "orientation": "portrait-primary",
     "scope": "/",
     "icons": [
+        {
+            "src": "/margrakshak-logo.webp",
+            "sizes": "192x192",
+            "type": "image/webp",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/margrakshak-logo.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any maskable"
+        },
         {
             "src": "/logo.png",
             "sizes": "192x192",
@@ -23,19 +35,18 @@
         }
     ],
     "categories": ["government", "utilities", "navigation"],
-    "screenshots": [],
     "shortcuts": [
         {
             "name": "Report Hazard",
             "short_name": "Report",
-            "url": "/dashboard/submit-report",
-            "icons": [{ "src": "/logo.png", "sizes": "192x192" }]
+            "url": "/submit-report",
+            "icons": [{ "src": "/margrakshak-logo.webp", "sizes": "192x192" }]
         },
         {
             "name": "Hazard Map",
             "short_name": "Map",
             "url": "/heatmap",
-            "icons": [{ "src": "/logo.png", "sizes": "192x192" }]
+            "icons": [{ "src": "/margrakshak-logo.webp", "sizes": "192x192" }]
         }
     ]
 }

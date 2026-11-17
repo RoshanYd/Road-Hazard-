@@ -50,10 +50,12 @@ export default function HomePage() {
         <div className="min-h-screen bg-gov-50 dark:bg-gov-950 font-sans">
 
             {/* ── Government Notice Bar ── */}
-            <div className="gov-notice-bar text-white text-xs py-1.5 px-4 flex items-center justify-center gap-2 text-center">
-                <span className="hidden sm:inline">🇮🇳</span>
-                <span>An initiative of the Ministry of Road Transport &amp; Highways, Government of India</span>
-                <span className="hidden sm:inline">🇮🇳</span>
+            <div className="gov-notice-bar text-white text-[11px] sm:text-xs py-1.5 px-3 sm:px-4 flex items-center justify-center gap-1.5 sm:gap-2 text-center overflow-hidden">
+                <span className="flex-shrink-0">🇮🇳</span>
+                <span className="truncate sm:whitespace-normal font-medium tracking-wide">
+                    An initiative of Ministry of Road Transport &amp; Highways, Govt. of India
+                </span>
+                <span className="flex-shrink-0">🇮🇳</span>
             </div>
 
             {/* ── Navigation ── */}
@@ -62,16 +64,14 @@ export default function HomePage() {
                     ? 'bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md shadow-gov border-b border-gov-200 dark:border-gov-700'
                     : 'bg-white dark:bg-[#0f172a] border-b border-gov-200 dark:border-gov-800'
             }`}>
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16">
+                <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-16 gap-2">
                         {/* Logo */}
-                        <Link href="/" className="flex items-center gap-3 group">
-                            <div className="relative">
-                                <img src="/margrakshak-logo.webp" alt="MargRakshak" className="w-10 h-10 rounded-lg object-cover shadow-gov" />
-                            </div>
-                            <div className="leading-tight">
-                                <div className="text-lg font-bold text-primary-800 dark:text-primary-300 tracking-tight">MargRakshak</div>
-                                <div className="text-[10px] text-gov-500 dark:text-gov-400 -mt-0.5 tracking-widest uppercase">सड़क सुरक्षा</div>
+                        <Link href="/" className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-shrink-0">
+                            <img src="/margrakshak-logo.webp" alt="MargRakshak" className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover shadow-gov flex-shrink-0" />
+                            <div className="leading-tight min-w-0">
+                                <div className="text-base sm:text-lg font-bold text-primary-800 dark:text-primary-300 tracking-tight truncate">MargRakshak</div>
+                                <div className="text-[9px] sm:text-[10px] text-gov-500 dark:text-gov-400 -mt-0.5 tracking-widest uppercase truncate">सड़क सुरक्षा</div>
                             </div>
                         </Link>
 
@@ -84,16 +84,26 @@ export default function HomePage() {
                             ))}
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        {/* Right Actions */}
+                        <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
                             <ThemeToggle />
-                            <Link href="/login" className="hidden sm:inline-flex btn btn-secondary text-sm py-2 px-4">
-                                Sign In
-                            </Link>
-                            <Link href="/register" className="btn btn-primary text-sm py-2 px-4">
-                                Report Now
-                            </Link>
+                            
+                            {/* Action buttons visible on sm screens and up */}
+                            <div className="hidden sm:flex items-center gap-2">
+                                <Link href="/login" className="btn btn-secondary text-xs sm:text-sm py-2 px-3 sm:px-4">
+                                    Sign In
+                                </Link>
+                                <Link href="/register" className="btn btn-primary text-xs sm:text-sm py-2 px-3 sm:px-4">
+                                    Report Now
+                                </Link>
+                            </div>
+
                             {/* Mobile menu toggle */}
-                            <button className="md:hidden p-2 rounded-lg text-gov-600 hover:bg-gov-100 dark:text-gov-300 dark:hover:bg-gov-800" onClick={() => setMobileOpen(!mobileOpen)}>
+                            <button
+                                className="md:hidden p-2 rounded-lg text-gov-600 hover:bg-gov-100 dark:text-gov-300 dark:hover:bg-gov-800 transition"
+                                onClick={() => setMobileOpen(!mobileOpen)}
+                                aria-label="Toggle navigation menu"
+                            >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
                                 </svg>
@@ -101,19 +111,31 @@ export default function HomePage() {
                         </div>
                     </div>
 
-                    {/* Mobile menu */}
+                    {/* Mobile menu drawer */}
                     {mobileOpen && (
-                        <div className="md:hidden py-3 border-t border-gov-200 dark:border-gov-700 space-y-1">
+                        <div className="md:hidden py-4 px-2 border-t border-gov-200 dark:border-gov-700 space-y-2 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-md">
                             {NAV_LINKS.map(l => (
                                 <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
-                                    className="block px-4 py-2 text-sm text-gov-700 dark:text-gov-300 hover:bg-gov-100 dark:hover:bg-gov-800 rounded-lg">
+                                    className="block px-4 py-2.5 text-sm font-medium text-gov-700 dark:text-gov-300 hover:bg-gov-100 dark:hover:bg-gov-800 rounded-lg transition">
                                     {l.label}
                                 </a>
                             ))}
-                            <Link href="/login" onClick={() => setMobileOpen(false)}
-                                className="block px-4 py-2 text-sm text-primary-700 dark:text-primary-300 font-medium hover:bg-gov-100 dark:hover:bg-gov-800 rounded-lg">
-                                Sign In
-                            </Link>
+                            <div className="pt-3 border-t border-gov-100 dark:border-gov-800 space-y-2 px-2">
+                                <Link href="/login" onClick={() => setMobileOpen(false)}
+                                    className="block w-full text-center py-2.5 px-4 text-sm font-semibold rounded-lg border border-primary-200 dark:border-gov-700 text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-gov-800 transition">
+                                    Sign In to Citizen Portal
+                                </Link>
+                                <Link href="/register" onClick={() => setMobileOpen(false)}
+                                    className="block w-full text-center py-2.5 px-4 text-sm font-semibold rounded-lg bg-primary-700 text-white hover:bg-primary-800 shadow-gov transition">
+                                    🚨 Report a Hazard Now
+                                </Link>
+                                <a
+                                    href={`${process.env.NEXT_PUBLIC_ADMIN_PORTAL_URL || 'http://localhost:3001'}/login`}
+                                    className="block text-center text-xs text-accent-600 dark:text-accent-400 font-semibold hover:underline pt-1"
+                                >
+                                    Civic Authority? Sign In to Admin Portal →
+                                </a>
+                            </div>
                         </div>
                     )}
                 </div>

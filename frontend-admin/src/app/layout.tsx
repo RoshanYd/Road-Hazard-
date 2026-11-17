@@ -5,10 +5,17 @@ import ThemeProvider from '../components/ThemeProvider';
 
 export const metadata: Metadata = {
     title: 'MargRakshak Admin Portal - Road Hazard Management',
+    applicationName: 'MargRakshak Admin',
     description: 'Civic Authority & Department Dashboard for managing road hazard reports, dispatching crews, and monitoring resolution SLAs.',
+    manifest: '/manifest.json',
     icons: {
         icon: '/margrakshak-logo.webp',
         apple: '/margrakshak-logo.webp',
+    },
+    appleWebApp: {
+        capable: true,
+        statusBarStyle: 'default',
+        title: 'MargRakshak Admin',
     },
 };
 

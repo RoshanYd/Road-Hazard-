@@ -51,7 +51,7 @@ export default function NotificationManager() {
                 body,
                 icon: '/margrakshak-logo.webp',
                 badge: '/margrakshak-logo.webp',
-                tag: 'road-safety-' + Date.now(),
+                tag: 'margrakshak-' + Date.now(),
                 requireInteraction: false,
             });
             notif.onclick = () => {
@@ -219,7 +219,7 @@ export default function NotificationManager() {
                             initial={{ opacity: 0, y: -10, scale: 0.95 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                            className="absolute right-0 top-full mt-2 w-96 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border dark:border-gray-700 z-50 max-h-[500px] overflow-hidden flex flex-col"
+                            className="fixed sm:absolute left-3 right-3 sm:left-auto sm:right-0 top-16 sm:top-full mt-2 sm:w-96 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 z-50 max-h-[75vh] sm:max-h-[500px] overflow-hidden flex flex-col"
                         >
                             {/* Header */}
                             <div className="px-4 py-3 border-b dark:border-gray-700 flex items-center justify-between bg-gray-50 dark:bg-gray-900">

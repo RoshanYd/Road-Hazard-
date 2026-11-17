@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
+import ThemeToggle from '../../components/ThemeToggle';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -81,14 +82,15 @@ export default function RegisterPage() {
     return (
         <div className="min-h-screen flex bg-gov-50 dark:bg-gov-950 font-sans">
             {/* Left Side - Form */}
-            <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#0f172a] lg:border-r border-gov-200 dark:border-gov-800 relative z-10 py-12">
-                <div className="absolute top-8 left-8 hidden sm:block">
-                    <Link href="/" className="inline-flex items-center space-x-2 group">
-                        <svg className="w-5 h-5 text-gov-500 group-hover:text-primary-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#0f172a] lg:border-r border-gov-200 dark:border-gov-800 relative z-10 pt-16 pb-8 sm:py-12">
+                <div className="absolute top-4 left-4 right-4 sm:top-8 sm:left-8 sm:right-8 flex items-center justify-between">
+                    <Link href="/" className="inline-flex items-center space-x-1.5 sm:space-x-2 group">
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gov-500 group-hover:text-primary-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        <span className="text-sm font-medium text-gov-500 group-hover:text-primary-600 transition-colors">Back to Home</span>
+                        <span className="text-xs sm:text-sm font-medium text-gov-500 group-hover:text-primary-600 transition-colors">Back to Home</span>
                     </Link>
+                    <ThemeToggle />
                 </div>
 
                 <motion.div

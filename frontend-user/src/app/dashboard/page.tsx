@@ -120,19 +120,21 @@ export default function DashboardPage() {
                     Thank you for making our roads safer. Manage your reports and track their progress here.
                 </p>
 
-                <Link href="/submit-report" className="btn btn-primary inline-flex items-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    Report New Hazard
-                </Link>
-                <Link href="/heatmap" className="btn btn-secondary inline-flex items-center ml-3">
-                    🗺️ View Hazard Map
-                </Link>
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <Link href="/submit-report" className="btn btn-primary inline-flex items-center justify-center">
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                        </svg>
+                        Report New Hazard
+                    </Link>
+                    <Link href="/heatmap" className="btn btn-secondary inline-flex items-center justify-center">
+                        🗺️ View Hazard Map
+                    </Link>
+                </div>
             </motion.div>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
                 {[
                     { label: 'Total Reports', value: reports.length, icon: '📊', color: 'primary' },
                     { label: 'Pending', value: reports.filter(r => r.status === 'submitted' || r.status === 'under_review').length, icon: '⏳', color: 'warning' },
@@ -144,14 +146,14 @@ export default function DashboardPage() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
-                        className="card hover:scale-105 transition-transform"
+                        className="card p-4 sm:p-6 hover:scale-105 transition-transform"
                     >
                         <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-600 text-sm mb-1">{stat.label}</p>
-                                <p className="text-3xl font-bold">{stat.value}</p>
+                            <div className="min-w-0 flex-1">
+                                <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mb-1 truncate">{stat.label}</p>
+                                <p className="text-2xl sm:text-3xl font-bold">{stat.value}</p>
                             </div>
-                            <div className="text-4xl">{stat.icon}</div>
+                            <div className="text-2xl sm:text-4xl ml-2">{stat.icon}</div>
                         </div>
                     </motion.div>
                 ))}

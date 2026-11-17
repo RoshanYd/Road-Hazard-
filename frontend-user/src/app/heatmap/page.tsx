@@ -75,33 +75,33 @@ export default function HeatmapPage() {
     return (
         <div className="h-screen flex flex-col">
             {/* Top Bar */}
-            <div className="bg-white border-b shadow-sm px-4 py-3 flex items-center justify-between z-20">
-                <div className="flex items-center gap-4">
-                    <Link href="/" className="flex items-center gap-2">
+            <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800 shadow-sm px-3 sm:px-4 py-2.5 sm:py-3 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 z-20">
+                <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+                    <Link href="/" className="flex items-center gap-2 flex-shrink-0">
                         <img src="/margrakshak-logo.webp" alt="MargRakshak" className="w-8 h-8 rounded-lg object-cover" />
-                        <span className="text-lg font-bold gradient-text hidden sm:block">MargRakshak Heatmap</span>
+                        <span className="text-base sm:text-lg font-bold gradient-text">Heatmap</span>
                     </Link>
 
                     {/* Stats Pills */}
                     <div className="hidden md:flex items-center gap-2">
-                        <span className="bg-gray-100 text-gray-700 text-xs font-bold px-3 py-1.5 rounded-full">
+                        <span className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs font-bold px-3 py-1.5 rounded-full">
                             📊 {stats.total} Reports
                         </span>
-                        <span className="bg-red-100 text-red-700 text-xs font-bold px-3 py-1.5 rounded-full">
+                        <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold px-3 py-1.5 rounded-full">
                             🔴 {stats.critical + stats.high} High/Critical
                         </span>
-                        <span className="bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full">
+                        <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-3 py-1.5 rounded-full">
                             ✅ {stats.resolved} Resolved
                         </span>
                     </div>
                 </div>
 
                 {/* Filters */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5 sm:gap-3 flex-wrap sm:flex-nowrap">
                     <select
                         value={filters.severity}
                         onChange={e => setFilters({ ...filters, severity: e.target.value })}
-                        className="text-sm border rounded-lg px-3 py-1.5 bg-white focus:ring-2 focus:ring-primary-200"
+                        className="text-xs sm:text-sm border dark:border-gray-700 rounded-lg px-2 sm:px-3 py-1.5 bg-white dark:bg-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-primary-200"
                     >
                         <option value="all">All Severity</option>
                         <option value="critical">🔴 Critical</option>
@@ -112,7 +112,7 @@ export default function HeatmapPage() {
                     <select
                         value={filters.status}
                         onChange={e => setFilters({ ...filters, status: e.target.value })}
-                        className="text-sm border rounded-lg px-3 py-1.5 bg-white focus:ring-2 focus:ring-primary-200"
+                        className="text-xs sm:text-sm border dark:border-gray-700 rounded-lg px-2 sm:px-3 py-1.5 bg-white dark:bg-gray-800 dark:text-gray-200 focus:ring-2 focus:ring-primary-200"
                     >
                         <option value="all">All Status</option>
                         <option value="submitted">Submitted</option>
@@ -120,7 +120,7 @@ export default function HeatmapPage() {
                         <option value="in_progress">In Progress</option>
                         <option value="resolved">Resolved</option>
                     </select>
-                    <Link href="/dashboard" className="btn btn-primary text-sm py-1.5 px-4">
+                    <Link href="/dashboard" className="btn btn-primary text-xs sm:text-sm py-1.5 px-3 sm:px-4">
                         ← Dashboard
                     </Link>
                 </div>

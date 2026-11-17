@@ -163,15 +163,17 @@ export default function SaarthiChatbot() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => setIsOpen(true)}
-                        className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-gov-xl flex items-center justify-center border-4 border-white dark:border-gov-900 transition-shadow hover:shadow-gov-2xl"
+                        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-13 h-13 sm:w-16 sm:h-16 rounded-full shadow-gov-xl flex items-center justify-center border-3 sm:border-4 border-white dark:border-gov-900 transition-all hover:scale-105 active:scale-95"
                         style={{
                             background: 'linear-gradient(135deg, #0e2450 0%, #1a4d9e 100%)', // gov-gradient
                         }}
+                        aria-label="Open Saarthi AI Assistant"
+                        title="Saarthi - MargRakshak AI Assistant"
                     >
-                        <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center overflow-hidden">
-                            <img src="/margrakshak-logo.webp" alt="MargRakshak" className="w-full h-full object-cover p-1" />
+                        <div className="w-7 h-7 sm:w-9 sm:h-9 bg-white rounded-full flex items-center justify-center overflow-hidden">
+                            <img src="/margrakshak-logo.webp" alt="MargRakshak" className="w-full h-full object-cover p-0.5 sm:p-1" />
                         </div>
-                        <span className="absolute top-0 right-0 w-4 h-4 bg-[#f97316] rounded-full animate-pulse border-2 border-white dark:border-gov-900" />
+                        <span className="absolute top-0 right-0 w-3 h-3 sm:w-4 sm:h-4 bg-[#f97316] rounded-full animate-pulse border-2 border-white dark:border-gov-900" />
                     </motion.button>
                 )}
             </AnimatePresence>
@@ -184,13 +186,13 @@ export default function SaarthiChatbot() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 40, scale: 0.95 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        className="fixed z-50 bg-gray-50 dark:bg-gov-900 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border border-gray-200 dark:border-gov-700"
+                        className="fixed z-50 bg-gray-50 dark:bg-gov-900 rounded-2xl sm:rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border border-gray-200 dark:border-gov-700"
                         style={{
-                            bottom: '24px',
-                            right: '16px',
-                            left: '16px',
-                            maxHeight: 'calc(100vh - 48px)',
-                            height: '600px',
+                            bottom: '16px',
+                            right: '12px',
+                            left: '12px',
+                            maxHeight: 'calc(100vh - 32px)',
+                            height: '560px',
                             // On larger screens, fix width and position from right
                             maxWidth: '420px',
                             marginLeft: 'auto',

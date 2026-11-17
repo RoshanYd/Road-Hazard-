@@ -65,7 +65,7 @@ class WebSocketService {
         // Send welcome message
         ws.send(JSON.stringify({
             type: 'CONNECTED',
-            message: 'Connected to RoadSafe real-time server. Send AUTH message to authenticate.',
+            message: 'Connected to MargRakshak real-time server. Send AUTH message to authenticate.',
             timestamp: new Date().toISOString(),
         }));
     }

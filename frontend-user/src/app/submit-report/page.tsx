@@ -381,22 +381,22 @@ export default function SubmitReportPage() {
 
                     {/* Severity */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Severity Level * {aiApplied && <span className="text-emerald-600 text-xs ml-1">(AI suggested)</span>}
                         </label>
-                        <div className="flex gap-3">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                             {SEVERITY_LEVELS.map(level => (
                                 <button
                                     key={level}
                                     type="button"
                                     onClick={() => setFormData({ ...formData, severity: level })}
-                                    className={`flex-1 py-3 px-4 rounded-lg border-2 font-medium transition capitalize ${formData.severity === level
+                                    className={`py-2.5 sm:py-3 px-2 sm:px-4 rounded-lg border-2 font-medium transition text-xs sm:text-sm capitalize ${formData.severity === level
                                         ? level === 'critical' || level === 'high'
-                                            ? 'border-danger-500 bg-danger-50 text-danger-700'
+                                            ? 'border-danger-500 bg-danger-50 text-danger-700 dark:bg-danger-900/30 dark:text-danger-400'
                                             : level === 'medium'
-                                                ? 'border-warning-500 bg-warning-50 text-warning-700'
-                                                : 'border-success-500 bg-success-50 text-success-700'
-                                        : 'border-gray-200 text-gray-700 hover:border-gray-300'
+                                                ? 'border-warning-500 bg-warning-50 text-warning-700 dark:bg-warning-900/30 dark:text-warning-400'
+                                                : 'border-success-500 bg-success-50 text-success-700 dark:bg-success-900/30 dark:text-success-400'
+                                        : 'border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300'
                                         }`}
                                 >
                                     {level}
@@ -407,7 +407,7 @@ export default function SubmitReportPage() {
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Description *
                         </label>
                         <textarea
@@ -425,16 +425,16 @@ export default function SubmitReportPage() {
 
                     {/* Location */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             📍 Location *
                         </label>
 
-                        <div className="flex items-center gap-4 mb-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
                             <button
                                 type="button"
                                 onClick={getLocation}
                                 disabled={isGettingLocation}
-                                className="btn btn-primary flex items-center gap-2 disabled:opacity-50"
+                                className="btn btn-primary flex items-center justify-center gap-2 disabled:opacity-50 text-sm py-2.5 px-4"
                             >
                                 {isGettingLocation ? (
                                     <>
@@ -450,7 +450,7 @@ export default function SubmitReportPage() {
                                 <motion.span
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="text-sm text-success-600 font-medium bg-success-50 px-3 py-1 rounded-full"
+                                    className="text-xs sm:text-sm text-success-600 font-medium bg-success-50 dark:bg-success-900/30 px-3 py-1.5 rounded-full inline-flex items-center gap-1 self-start sm:self-auto"
                                 >
                                     ✓ {location.lat.toFixed(4)}, {location.lng.toFixed(4)}
                                 </motion.span>
