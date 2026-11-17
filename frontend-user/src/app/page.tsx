@@ -65,9 +65,9 @@ export default function HomePage() {
                     : 'bg-white dark:bg-[#0f172a] border-b border-gov-200 dark:border-gov-800'
             }`}>
                 <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center h-16 gap-2">
-                        {/* Logo */}
-                        <Link href="/" className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-shrink-0">
+                    <div className="flex justify-between items-center h-16 gap-2 sm:gap-4">
+                        {/* Logo & Brand Name */}
+                        <Link href="/" className="flex items-center gap-2 sm:gap-3 group min-w-0 flex-shrink">
                             <img src="/margrakshak-logo.webp" alt="MargRakshak" className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover shadow-gov flex-shrink-0" />
                             <div className="leading-tight min-w-0">
                                 <div className="text-base sm:text-lg font-bold text-primary-800 dark:text-primary-300 tracking-tight truncate">MargRakshak</div>
@@ -75,7 +75,17 @@ export default function HomePage() {
                             </div>
                         </Link>
 
-                        {/* Desktop nav */}
+                        {/* Sign In Button — Positioned between MargRakshak name and Toggle button */}
+                        <div className="flex items-center flex-shrink-0 mx-1 sm:mx-2">
+                            <Link
+                                href="/login"
+                                className="inline-flex items-center justify-center whitespace-nowrap text-xs sm:text-sm font-semibold py-1.5 px-3 sm:py-2 sm:px-4 rounded-lg border border-primary-300 dark:border-gov-700 bg-white dark:bg-gov-800 text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-gov-700 shadow-sm transition-all"
+                            >
+                                Sign In
+                            </Link>
+                        </div>
+
+                        {/* Desktop nav links */}
                         <div className="hidden md:flex items-center gap-6">
                             {NAV_LINKS.map(l => (
                                 <a key={l.href} href={l.href} className="text-sm font-medium text-gov-600 dark:text-gov-300 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
@@ -84,23 +94,19 @@ export default function HomePage() {
                             ))}
                         </div>
 
-                        {/* Right Actions */}
+                        {/* Right Actions: Report Now + Theme Toggle + Mobile Menu */}
                         <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+                            {/* Report Now button on sm+ */}
+                            <Link href="/register" className="hidden sm:inline-flex btn btn-primary text-xs sm:text-sm py-2 px-3 sm:px-4 whitespace-nowrap">
+                                Report Now
+                            </Link>
+
+                            {/* Theme Toggle button */}
                             <ThemeToggle />
-                            
-                            {/* Action buttons visible on sm screens and up */}
-                            <div className="hidden sm:flex items-center gap-2">
-                                <Link href="/login" className="btn btn-secondary text-xs sm:text-sm py-2 px-3 sm:px-4">
-                                    Sign In
-                                </Link>
-                                <Link href="/register" className="btn btn-primary text-xs sm:text-sm py-2 px-3 sm:px-4">
-                                    Report Now
-                                </Link>
-                            </div>
 
                             {/* Mobile menu toggle */}
                             <button
-                                className="md:hidden p-2 rounded-lg text-gov-600 hover:bg-gov-100 dark:text-gov-300 dark:hover:bg-gov-800 transition"
+                                className="md:hidden p-1.5 sm:p-2 rounded-lg text-gov-600 hover:bg-gov-100 dark:text-gov-300 dark:hover:bg-gov-800 transition"
                                 onClick={() => setMobileOpen(!mobileOpen)}
                                 aria-label="Toggle navigation menu"
                             >
